@@ -1,17 +1,184 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title><%= htmlWebpackPlugin.options.title %></title>
-  </head>
-  <body>
-    <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+
 </html>
+<button id="btn">Clone Card</button>
+<button id="btnColor">Change Card Color</button>
+<button id="titleBtn">Change Title</button>
+<button id="deleteBtn">Delete Last Card</button>
+<div class="cards">
+  <div class="card-container">
+    <div class="card-content">
+      <h2 id="cardTitle">Penn State Lacrosse</h2>
+      <p>We Are!</p>
+      <img src="https://dxbhsrqyrr690.cloudfront.net/sidearm.nextgen.sites/gopsusports.com/images/2019/4/12/DSC_3685.jpg" alt="Card Image">
+      <div>
+
+          <style>
+      .hidden {
+          display: none;
+      }
+      .cards {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-between;
+      }
+      .card-container {
+          background-color: #001e44;
+          width: 20%;
+          margin: 8px;
+          padding: 10px;
+          border-radius: 12px;
+      }
+      .card-content img {
+          max-width: 100%;
+          border-radius: 10px;
+      }
+
+      .cards {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  
+}
+
+.card-container {
+  background-color: #001e44;
+  width: 20%;
+  height: 50%;
+  display: block;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+}
+
+
+
+.card-content {
+  text-align: center;
+  color: white;
+  display: block;
+  flex-direction: column;
+  aign-content: center;
+  justify-content: center;
+}
+
+
+.card-content> img{
+  width: 200px;
+  max-width:80%;
+  border-radius: 10px;
+}
+
+
+.card-content button{
+  margin-top:40px;
+  text-decoration: none;
+  background-color: #ffff;
+  color:#001e44 ;
+  padding: 8px 12px;
+  border-radius: 5px;
+}
+
+.card-content button:hover{ 
+  background-color: #001e44;
+  color: white;
+
+}
+
+.card-content button a{
+   text-decoration: none;
+}
+
+#cDescription {
+  color: white;
+  font-family: "Lucida Console";
+}
+
+@media (max-width: 800px) and (min-width: 500px) {
+  .details-button {
+    display: block;
+  }
+}
+
+@media (max-width: 500px) {
+  .card {
+    max-width: 300px;
+  }
+}
+
+  </style>
+</head>
+          
+        <button class="details-button">Toggle Description</button>
+      </div>
+    </div>
+    <p class="description hidden" id="cDescription">Come Watch Penn State Lacrosse Dominate!</p>
+  </div>
+</div>
+
+<script>
+  const button = document.querySelector("#btn");
+  const colorButton = document.querySelector("#btnColor");
+  const cardContainer = document.querySelector(".card-container");
+  const cardTitle = document.querySelector("#cardTitle");
+  const detailsButton = document.querySelector(".details-button");
+  const description = document.querySelector(".description");
+  const deleteButton = document.querySelector("#deleteBtn");
+  const titleButton = document.querySelector("#titleBtn");
+
+  button.addEventListener("click", function (e) {
+    const cardToClone = document.querySelector(".card-container");
+    const cardCloned = cardToClone.cloneNode(true);
+    
+  cardCloned.querySelector(".details-button").addEventListener("click", function (e) { //59-63 toggle description cloned cards
+  const description = cardCloned.querySelector(".description");
+  if (description) {
+  description.classList.toggle("hidden");
+  }
+});
+    document.querySelector(".cards").appendChild(cardCloned);
+  });
+
+  colorButton.addEventListener("click", function (e) {
+  
+    const randomColor = getRandomColor();
+    cardContainer.style.backgroundColor = randomColor;
+  });
+
+  cardTitle.addEventListener("click", function (e) {
+ 
+    cardTitle.textContent = "Something Else";
+  });
+
+  detailsButton.addEventListener("click", function (e) {
+   
+    description.classList.toggle("hidden");
+    
+  });
+
+  deleteButton.addEventListener("click", function (e) {
+    
+    const cards = document.querySelectorAll(".card-container");
+    if (cards.length > 1) {
+      const lastCard = cards[cards.length - 1];
+      lastCard.parentNode.removeChild(lastCard);
+    }
+  });
+
+  titleButton.addEventListener("click", function (e) {
+    
+    
+    cardTitle.textContent = "something else";
+  });
+
+  //Random color generator
+  function getRandomColor() {
+    const letters = "0123456789ABCDEF";
+    let color = "#";
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+</script>
